@@ -10,6 +10,25 @@ export default {
 
     // 公用正则验证
     /**
+     * 用户注册密码验证
+     * 6~20个字，由中英文或数字组成。其中，中文和英文都作为一个字统计支持全英文,不支持空格、符号或全数字
+     * @param {*} rule 定义正则
+     * @param {*} value 传入的值
+     * @param {*} callback 返回函数
+     * */
+    UserPsw(rule, value, callback) {
+        const reg = /^\S{6,20}$/
+        if (value) {
+            if (!reg.test(value)) {
+                callback(new Error("请输入由'以字母或中文开头，可以包含中文、字母、数字2-12字符名称！'"));
+            } else {
+                callback();
+            }
+        } else {
+            callback(new Error("请输入内容"));
+        }
+    },
+    /**
      * 签名验证
      * 2~12个字，由中英文或数字组成。其中，中文和英文都作为一个字统计支持全英文,不支持空格、符号或全数字
      * @param {*} rule 定义正则
@@ -241,9 +260,6 @@ export default {
             callback();
         }
     },
-
-
-
 
 
 

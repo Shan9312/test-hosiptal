@@ -7,11 +7,11 @@
       class="login-form"
       label-width="100px"
     >
-      <h3 class="title">用户注册</h3>
-      <el-form-item prop="phone" label="手机号">
+      <h3 class="title">忘记密码</h3>
+      <el-form-item prop="userPhone" label="手机号">
         <el-input
-          v-model="loginForm.phone"
-          name="phone"
+          v-model="loginForm.userPhone"
+          name="userPhone"
           type="text"
           maxlength="40"
           placeholder="请输入手机号"
@@ -33,33 +33,35 @@
             type="primary"
             style="width:100%;"
             @click.native.prevent="handleLogin"
-          >验证码</el-button>
+          >获取验证码</el-button>
         </div>
       </el-form-item>
-      <el-form-item prop="password_confirmation" label="设置密码">
+      <el-form-item prop="password" label="设置密码">
         <el-input
           :type="pwdType"
-          v-model="loginForm.password_confirmation"
-          name="password_confirmation"
+          v-model="loginForm.password"
+          name="password"
           placeholder="请输入密码"
           maxlength="20"
           @keyup.enter.native="handleLogin"
         />
       </el-form-item>
-      <el-form-item prop="captcha" label="确认密码">
+      <el-form-item prop="password" label="确认密码">
         <el-input
           :type="pwdType"
-          v-model="loginForm.captcha"
-          name="captcha"
+          v-model="loginForm.password"
+          name="password"
           placeholder="请输入密码"
           maxlength="20"
           @keyup.enter.native="handleLogin"
         />
       </el-form-item>
       <!-- 忘记密码 注册账号  -->
-      <el-form-item>
-        <el-checkbox v-model="loginForm.checked">我已阅读《XXX协议》</el-checkbox>
-      </el-form-item>
+      <div class="point-psd">
+        <span>忘记密码</span>
+        <span>注册账号</span>
+      </div>
+
       <el-form-item>
         <el-button
           :loading="loading"
@@ -78,16 +80,20 @@ import { Validate } from "../utils";
 export default {
   name: "Login",
   data() {
+    const validatePass = (rule, value, callback) => {
+      if (value.length < 6) {
+        callback(new Error("密码不能小于6位"));
+      } else {
+        callback();
+      }
+    };
     return {
       loginForm: {
-        phone: "",
-        password: "",
-        password_confirmation: "",
-        captcha: "",
-        checked: true
+        userPhone: "",
+        password: ""
       },
       loginRules: {
-        phone: [
+        userPhone: [
           {
             required: true,
             trigger: "blur",
@@ -98,14 +104,7 @@ export default {
           {
             required: true,
             trigger: "blur",
-            validator: Validate.UserPsw
-          }
-        ],
-        password_confirmation: [
-          {
-            required: true,
-            trigger: "blur",
-            validator: Validate.UserPsw
+            validator: validatePass
           }
         ]
       },
@@ -166,7 +165,7 @@ export default {
     position: relative;
   }
   .captcha-input {
-    width: 80% !important;
+    width: 70% !important;
   }
   .captcha-btn {
     position: absolute;
@@ -175,10 +174,10 @@ export default {
   }
   .point-psd {
     display: flex;
-    width: 24rem;
+    width: 22rem;
     margin-bottom: 1rem;
     margin-top: 1rem;
-    margin-left: 4rem;
+    margin-left: 5rem;
     justify-content: space-between;
     color: red;
     padding: 0 0.25rem;
