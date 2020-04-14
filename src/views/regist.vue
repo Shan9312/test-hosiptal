@@ -7,7 +7,7 @@
       class="login-form"
       label-width="100px"
     >
-      <h3 class="title">互联网医院系统登录</h3>
+      <h3 class="title">用户注册</h3>
       <el-form-item prop="userPhone" label="手机号">
         <el-input
           v-model="loginForm.userPhone"
@@ -17,7 +17,36 @@
           placeholder="请输入手机号"
         ></el-input>
       </el-form-item>
-      <el-form-item prop="password" label="密码">
+      <el-form-item prop="password" label="验证码" class="captcha">
+        <el-input
+          :type="pwdType"
+          class="captcha-input"
+          v-model="loginForm.password"
+          name="password"
+          placeholder="请输入密码"
+          maxlength="20"
+          @keyup.enter.native="handleLogin"
+        />
+        <div class="captcha-btn">
+          <el-button
+            :loading="loading"
+            type="primary"
+            style="width:100%;"
+            @click.native.prevent="handleLogin"
+          >验证码</el-button>
+        </div>
+      </el-form-item>
+      <el-form-item prop="password" label="设置密码">
+        <el-input
+          :type="pwdType"
+          v-model="loginForm.password"
+          name="password"
+          placeholder="请输入密码"
+          maxlength="20"
+          @keyup.enter.native="handleLogin"
+        />
+      </el-form-item>
+      <el-form-item prop="password" label="确认密码">
         <el-input
           :type="pwdType"
           v-model="loginForm.password"
@@ -132,6 +161,17 @@ export default {
 <style lang="less" scoped>
 /* reset element-ui css */
 .login-container {
+  .captcha {
+    position: relative;
+  }
+  .captcha-input {
+    width: 80% !important;
+  }
+  .captcha-btn {
+    position: absolute;
+    right: 0rem;
+    top: 0rem;
+  }
   .point-psd {
     display: flex;
     width: 24rem;

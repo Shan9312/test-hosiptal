@@ -26,7 +26,7 @@
   font-size: 0.875rem;
   top: 0;
   .header-content {
-    width: 74.375rem;
+    width: 75rem;
     margin: 0 auto;
     border: 1px solid #000;
     height: 2.875rem;
